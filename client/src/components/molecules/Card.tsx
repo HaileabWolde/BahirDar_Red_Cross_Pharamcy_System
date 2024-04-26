@@ -21,9 +21,10 @@ export const Card = ({
   cover,
   ...rest
 }: CardProps) => {
-  return (
-    <>
-      <div className={cardClass} {...rest}>
+  return (  
+      <div
+      style={{ alignSelf: 'flex-start' }} // Add this line to set the individual card's alignment 
+      className={cardClass} {...rest}>
         <Image
           className={imageWrapperClass}
           objectCover={cover}
@@ -33,6 +34,5 @@ export const Card = ({
 
         <div className={textWrapperClass}>{children}</div>
       </div>
-    </>
   );
 };
