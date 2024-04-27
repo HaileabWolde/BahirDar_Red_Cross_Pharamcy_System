@@ -23,14 +23,14 @@ interface Drug {
 
 const Drugs = ()=>{
     const dispatch = useDispatch()
-    const { AllDrugs} = useSelector((state: DrugsStateONE) => state.drugs)
+    const { AllDrugs,  Loading} = useSelector((state: DrugsStateONE) => state.drugs)
 
     useEffect(() =>{
         dispatch(StartInLoading())
     }, [dispatch]);
 
     const [expandedCards, setExpandedCards] = useState<Array<number | boolean>>(() => {
-        const length = AllDrugs.length;
+        const length = AllDrugs?.length;
         const initialArray: Array<number | boolean> = [];
         for (let i = 0; i < length; i++) {
           initialArray.push(false);
@@ -62,6 +62,9 @@ const Drugs = ()=>{
         <h1 className="text-center capitalize text-5xl font-serif font-semibold text-[#1C274C]">Drugs</h1>
         <div className='w-24 border-2 border-[#008CC1]  rounded-lg shadow-lg'></div>
         <p className='text-md  font-semibold text-[#1C274C]'>Explore our medicinal wonders for a Healthier You !!!</p>
+        {
+            Loading && <h1>Loading</h1>
+        }
         <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3  max-w-6xl mx-auto gap-4">
             {
                 AllDrugs?.map((drug: Drug, index:number)=> {

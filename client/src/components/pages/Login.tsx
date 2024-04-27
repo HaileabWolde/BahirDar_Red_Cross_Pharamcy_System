@@ -4,9 +4,16 @@ import { useNavigate } from "react-router-dom";
 // @ts-ignore
 import LoginImage from "../../assets/login.png"
 import { Image } from "../atoms/Image";
+
+interface IState {
+    Data: {
+        email: "",
+        password: ""
+    }
+}
 const Login = ()=>{
     const navigate = useNavigate()
-    const [formdata, setFormData] = useState({
+    const [formdata, setFormData] = useState<IState["Data"]>({
         email: "",
         password: ""
     })

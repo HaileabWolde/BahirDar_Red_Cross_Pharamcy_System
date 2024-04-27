@@ -4,8 +4,17 @@ import { CardOne } from "../molecules/CardOne";
 import { motion } from "framer-motion";
 // @ts-ignore
 import SignupImage from "../../assets/signup.jpg"
+
+interface IState {
+    Data: {
+        UserName: "",
+        email: "",
+        password: "",
+        confrimpassword: ""
+    }
+}
 const Signup = ()=>{
-    const [formdata, setFormData] = useState({
+    const [formdata, setFormData] = useState<IState["Data"]>({
         UserName: "",
         email: "",
         password: "",

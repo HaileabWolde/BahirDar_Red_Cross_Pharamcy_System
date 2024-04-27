@@ -9,6 +9,7 @@ function* workGetAllDrugsFetch(): Generator<any, void, any> {
         yield put(StartInFailure(data.message));
     }
     yield put(FetchAll(data))
+    yield put(EndInLoading())
 }
 function* DrugSaga() {
 yield takeEvery('drugs/StartInLoading', workGetAllDrugsFetch);
