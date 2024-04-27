@@ -17,7 +17,8 @@ interface Drug {
     _id: string,
     name: string,
     image: string,
-    description: string
+    description: string,
+    price: number
 }
 
 const Drugs = ()=>{
@@ -76,7 +77,14 @@ const Drugs = ()=>{
                                 <Text as="h4" className="font-serif uppercase rounded">
                                      {drug.name}
                                 </Text>
-                                <p className="text-md   font-sans italic  font-light">{ expandedCards[index] ? drug.description : truncateText(drug.description, 200)} <span>  <button className="font-semibold hover:underline" onClick={(e)=> handleRead(e, index)}>{expandedCards[index] ? 'Less' : 'Read More'}</button> </span></p>
+                                <p className="text-md   font-sans italic  font-light">{ expandedCards[index] ? drug.description : truncateText(drug.description, 200)} <span>  <button className="font-semibold hover:underline" onClick={(e)=> handleRead(e, index)}>{expandedCards[index] ? 'Less' : '... Read More'}</button> </span></p>
+                                <Text className="w-full flex justify-between">
+                                    <p className="font-semilight font-serif">{drug.price} <span className="font-bold font-mono">Birr</span></p>
+                                    
+                                    <Link to={`/drugs/${drug._id}`}>
+                                        <h1 className="text-lg text-[#EA0063] font-serif hover:scale-105 hover:text-red-700">ADD</h1>
+                                    </Link>
+                                </Text>
 
                             </Card> 
                         

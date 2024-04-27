@@ -7,6 +7,7 @@ const HeroSection = ()=>{
     return (
         <div id="HOME" className="w-full mt-[100px]">
             <CardOne
+           
             cardClass="h-[500px]"
             cardSrc={profile}
             textWrapperClass="h-full flex items-center px-8"

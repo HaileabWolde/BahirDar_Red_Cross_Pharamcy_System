@@ -1,7 +1,8 @@
 import {Routes, Route} from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Home from "./components/pages/Home";
-import Footer from "./components/organs/Footer/Footer";
+import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
 function App() {
   return (
     
@@ -9,8 +10,9 @@ function App() {
         <AnimatePresence>
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/> 
           </Routes>
-          <Footer/>
         </AnimatePresence>
     </div>
   );
