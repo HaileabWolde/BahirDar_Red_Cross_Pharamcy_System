@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import connectDB from './config/dbConnect.mjs'
 import ErrorObject from './utils/ErrorObject.js'
 import drugRoute from './routes/drugRoute.js'
+import userRoute from './routes/userRoute.js'
 config()
 
 const app = express()
@@ -24,6 +25,7 @@ app.get('/', (req, res)=>{
     res.json('Hello')
 })
 app.use('/drugs', drugRoute)
+app.use('/user', userRoute)
 app.use(ErrorObject)
 
 const start = async()=>{
