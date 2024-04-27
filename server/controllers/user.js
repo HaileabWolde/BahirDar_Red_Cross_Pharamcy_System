@@ -2,7 +2,7 @@ import {ErrorHandler} from "../middlewares/ErrorHandler.js"
 import UserSchema from "../model/UserModel.js"
 
 export const signup = async (req,res, next)=>{
-    const {name, email, password, userType, confirmpassword} = req.body
+    const { UserName: name, email, password, userType, confirmpassword} = req.body
 
     try{
       if(confirmpassword){

@@ -1,35 +1,47 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate} from "react-router-dom";
 import { CardOne } from "../molecules/CardOne";
 import { motion } from "framer-motion";
+import { StartInLogIn } from "../../redux/User/User";
 // @ts-ignore
-import SignupImage from "../../assets/signup.jpg"
+import SignupImage from "../../assets/signup.jpg";
+import Message from "../molecules/message";
+import Loading from "../molecules/Loading";
 
-interface IState {
-    Data: {
-        UserName: "",
-        email: "",
-        password: "",
-        confrimpassword: ""
-    }
-}
+
 const Signup = ()=>{
-    const [formdata, setFormData] = useState<IState["Data"]>({
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {isLoading, error} =  useSelector((state)=> state.user)
+    const [formdata, setFormData] = useState({
         UserName: "",
         email: "",
         password: "",
-        confrimpassword: ""
+        confirmpassword: ""
     })
-    const navigate = useNavigate()
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+  
+    const handleChange = (e)=>{
         setFormData({
             ...formdata,
             [e.target.name]: e.target.value
         })
     }
-    const handleSubmit = ()=>{
-
+    const handleSubmit = async(e)=>{
+        e.preventDefault();
+        
+        dispatch(StartInLogIn({
+            formdata: {
+              UserName: formdata.UserName,
+              email: formdata.email,
+              password: formdata.password,
+              confirmpassword: formdata.confirmpassword,
+            },
+            navigate,
+          }))
+      
     }
+    
     return (
         <motion.div
         initial={{opacity : 0}}
@@ -52,6 +64,7 @@ const Signup = ()=>{
                         <input
                         placeholder="User Name"
                         type="text"
+                        name="UserName"
                         value={formdata.UserName}
                         className=" rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
                         onChange={handleChange} 
@@ -59,8 +72,8 @@ const Signup = ()=>{
                          <input 
                         placeholder="Email" 
                         type="email" 
-                        value={formdata.email} 
                         name="email"
+                        value={formdata.email} 
                         className="rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
                         onChange={handleChange}/>
                         <input
@@ -73,13 +86,21 @@ const Signup = ()=>{
                          <input
                         placeholder="Confrim Password" 
                         type="password" 
-                        value={formdata.confrimpassword} 
-                        name="confrimpassword" 
+                        value={formdata.confirmpassword} 
+                        name="confirmpassword" 
                         className="rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
                         onChange={handleChange}/>
                          <button type='submit' className='flex bg-[#0C85C6] text-white text-xl cursor-pointer items-center justify-center md:py-2 py-3 rounded-lg mb-6 font-serif hover:scale-105 duration-500 hover:bg-[#54ACDB]'>
-                          SIGN UP
+                          {
+                            isLoading ? 'Loading' : 'SIGN UP'
+                          }
                         </button>
+                        {
+                            error && 
+                            <Message variant='danger'>
+                                {error}
+                            </Message>
+                        }
                    </form>
                    <p className='md:text-md text-xl font-serif text-[#1C274C] italic'>Have an account? <button  onClick={()=> navigate('/login')} className='capitalize text-[#0C85C6] text-xl font-serif cursor-pointer hover:scale-105 hover:text-[#54ACDB] duration-200 p-0 hover:underline'>LogIn</button></p>
            </div>
