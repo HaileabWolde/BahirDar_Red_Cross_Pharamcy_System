@@ -28,8 +28,8 @@ const Signup = ()=>{
             email: Yup.string().email("Invalid Email Address").required("Please Provide an Email Addresss"),
             password: Yup.string()
             .required('No password provided.') 
-            .min(5, 'Password is too short - should be 5 chars minimum.'),
-            confirmpassword: Yup.string().min(5, 'Password is too short - should be 5 chars minimum.').required('Required')
+            .min(4, 'Password is too short - should be 4 chars minimum.'),
+            confirmpassword: Yup.string().min(4, 'Password is too short - should be 4 chars minimum.').required('Required')
         }),
         onSubmit: (values)=>{
             dispatch(StartInLogIn({

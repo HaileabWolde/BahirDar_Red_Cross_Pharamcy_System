@@ -24,7 +24,7 @@ const Login = ()=>{
             email: Yup.string().email("Invalid Email Address").required("Please Provide an Email Addresss"),
             password: Yup.string()
             .required('No password provided.') 
-            .min(5, 'Password is too short - should be 5 chars minimum.'),
+            .min(4, 'Password is too short - should be 4 chars minimum.'),
            
         }),
         onSubmit: (values) =>{
