@@ -18,8 +18,13 @@ function* workGetUserFetch(action: PayloadAction<{
   }>): Generator<any, void, any> {
     const formData = action.payload.formdata;
     const { navigate } = action.payload;
-  
-    const endpoint = `http://localhost:5000/user/signup`;
+    let endpoint = ''
+    if(formData.UserName || formData.confirmpassword){
+       endpoint = `http://localhost:5000/user/signup`
+    }
+   else{
+    endpoint = `http://localhost:5000/user/signin`
+   }
     try {
       const res = yield call(fetch, endpoint, {
         method: 'POST',

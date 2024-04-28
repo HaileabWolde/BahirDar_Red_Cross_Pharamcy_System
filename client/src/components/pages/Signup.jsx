@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import { useFormik } from "formik";
+import * as Yup from 'yup'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 import { CardOne } from "../molecules/CardOne";
@@ -6,41 +8,56 @@ import { motion } from "framer-motion";
 import { StartInLogIn } from "../../redux/User/User";
 // @ts-ignore
 import SignupImage from "../../assets/signup.jpg";
-import Message from "../molecules/message";
-import Loading from "../molecules/Loading";
 
 
 const Signup = ()=>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [Error, setError] = useState(false)
     const {isLoading, error} =  useSelector((state)=> state.user)
-    const [formdata, setFormData] = useState({
-        UserName: "",
-        email: "",
-        password: "",
-        confirmpassword: ""
+
+    const formik = useFormik({
+        initialValues: {
+            UserName: "",
+            email: "",
+            password: "",
+            confirmpassword: ""  
+        },
+        validationSchema: Yup.object({
+            UserName: Yup.string().max(15, "Must be 20 characters or less").required("Please Provide a UserName"),
+            email: Yup.string().email("Invalid Email Address").required("Please Provide an Email Addresss"),
+            password: Yup.string()
+            .required('No password provided.') 
+            .min(5, 'Password is too short - should be 5 chars minimum.'),
+            confirmpassword: Yup.string().min(5, 'Password is too short - should be 5 chars minimum.').required('Required')
+        }),
+        onSubmit: (values)=>{
+            dispatch(StartInLogIn({
+                formdata: values,
+                navigate
+            })) 
+        }
     })
-  
-    const handleChange = (e)=>{
-        setFormData({
-            ...formdata,
-            [e.target.name]: e.target.value
-        })
-    }
-    const handleSubmit = async(e)=>{
-        e.preventDefault();
+    
+
+    useEffect(()=>{
+        if(error){
+            setError(true)
+        }
         
-        dispatch(StartInLogIn({
-            formdata: {
-              UserName: formdata.UserName,
-              email: formdata.email,
-              password: formdata.password,
-              confirmpassword: formdata.confirmpassword,
-            },
-            navigate,
-          }))
-      
-    }
+    }, [error])
+
+    useEffect(()=>{
+        if(Error){
+            const timeoutId = setTimeout(() => {
+                setError(false);
+              }, 4000);
+          
+              return () => {
+                clearTimeout(timeoutId);
+              };   
+        }
+    }, [Error])
     
     return (
         <motion.div
@@ -55,51 +72,59 @@ const Signup = ()=>{
         cardClass="w-full h-screen flex flex-col justify-center"
         cardSrc={SignupImage}
         >
-           <div className="max-w-2xl mx-auto flex flex-col items-center bg-white shadow-md border rounded-lg pt-[50px] pb-[50px] gap-4">
+           <div className="max-w-lg mx-auto flex flex-col items-center bg-white shadow-md border rounded-lg pt-[30px] pb-[30px]">
                     <h1 className="text-center capitalize text-4xl font-serif font-semibold text-[#1C274C]">SIGNUP</h1>
                    <p className='text-center text-xl italic  font-semibold text-[#1C274C]'>Welcome to BahirDar  RedCross Pharmacy System</p>
                    <form
-                   className="flex flex-col gap-4 w-[60%]" 
-                   onSubmit={handleSubmit}>
+                   className="flex flex-col gap-4 w-[60%] mt-2" 
+                   onSubmit={formik.handleSubmit}>
                         <input
                         placeholder="User Name"
                         type="text"
                         name="UserName"
-                        value={formdata.UserName}
+                        value={formik.values.UserName}
                         className=" rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
-                        onChange={handleChange} 
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange} 
                         />
+                        {formik.touched.UserName && formik.errors.UserName ? <p className="text-center text-xs text-[#EA0063] italic font-semibold">{formik.errors.UserName}</p> : null}
                          <input 
                         placeholder="Email" 
                         type="email" 
                         name="email"
-                        value={formdata.email} 
+                        value={formik.values.email} 
+                        onBlur={formik.handleBlur}
                         className="rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
-                        onChange={handleChange}/>
+                        onChange={formik.handleChange}/>
+                           {formik.touched.email && formik.errors.email ? <p className="text-center text-xs text-[#EA0063] italic font-semibold">{formik.errors.email}</p> : null}
                         <input
                         placeholder="Password" 
                         type="password" 
-                        value={formdata.password} 
+                        value={formik.values.password}
+                        onBlur={formik.handleBlur} 
                         name="password" 
                         className=" rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
-                        onChange={handleChange}/>
+                        onChange={formik.handleChange}/>
+                         {formik.touched.password && formik.errors.password ? <p className="text-center text-xs text-[#EA0063] italic font-semibold">{formik.errors.password}</p> : null}
                          <input
-                        placeholder="Confrim Password" 
+                        placeholder="Confirm Password" 
                         type="password" 
-                        value={formdata.confirmpassword} 
+                        onBlur={formik.handleBlur}
+                        value={formik.values.confirmpassword} 
                         name="confirmpassword" 
                         className="rounded-lg border-2 border-[#54ACDB] px-2 md:py-1 py-2 outline-none"
-                        onChange={handleChange}/>
+                        onChange={formik.handleChange}/>
+                          {formik.touched.confirmpassword && formik.errors.confirmpassword ? <p className="text-center text-xs text-[#EA0063] italic font-semibold">{formik.errors.confirmpassword}</p> : null}
                          <button type='submit' className='flex bg-[#0C85C6] text-white text-xl cursor-pointer items-center justify-center md:py-2 py-3 rounded-lg mb-6 font-serif hover:scale-105 duration-500 hover:bg-[#54ACDB]'>
                           {
-                            isLoading ? 'Loading' : 'SIGN UP'
+                            isLoading ? 
+                           'Loading'
+                           : 'SIGN UP'
                           }
                         </button>
                         {
-                            error && 
-                            <Message variant='danger'>
-                                {error}
-                            </Message>
+                            Error && 
+                            <p className="text-center text-lg text-[#EA0063]">{error}</p>
                         }
                    </form>
                    <p className='md:text-md text-xl font-serif text-[#1C274C] italic'>Have an account? <button  onClick={()=> navigate('/login')} className='capitalize text-[#0C85C6] text-xl font-serif cursor-pointer hover:scale-105 hover:text-[#54ACDB] duration-200 p-0 hover:underline'>LogIn</button></p>
