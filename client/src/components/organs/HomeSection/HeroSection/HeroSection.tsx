@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { CardOne } from "../../molecules/CardOne";
+import { CardOne } from "../../../molecules/CardOne";
 // @ts-ignore
-import profile from "../../../assets/home.jpg";
+import profile from "../../../../assets/home.jpg";
 const HeroSection = ()=>{
     const navigate = useNavigate()
     return (

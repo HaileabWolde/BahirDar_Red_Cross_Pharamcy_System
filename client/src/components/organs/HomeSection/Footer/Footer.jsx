@@ -1,7 +1,5 @@
-import { Link} from "react-router-dom";
-import {Text} from "../../atoms/Text";
-import {Image} from "../../atoms/Image";
-import  redCross  from "../../../assets/red-cross.png";
+import {Image} from "../../../atoms/Image";
+import  redCross  from "../../../../assets/red-cross.png";
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
 const Footer = ()=>{
      

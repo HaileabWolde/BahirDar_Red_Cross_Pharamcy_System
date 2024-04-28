@@ -32,10 +32,15 @@ export const userSlice = createSlice({
         },
         EndInLoading: (state)=>{
             state.isLoading = false
+        },
+        LOGOUT_USER: (state)=>{
+            state.userInfo = null;
+            state.token = null;
         }
     }
 });
 export const {
-    StartInLogIn,  LogInSuccess, LogInError,  EndInLoading
+    StartInLogIn,  LogInSuccess, LogInError,  EndInLoading,
+    LOGOUT_USER
 } = userSlice.actions;
 export default userSlice.reducer;

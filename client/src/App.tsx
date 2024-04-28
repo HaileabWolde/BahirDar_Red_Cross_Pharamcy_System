@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import SingleDrug from "./components/pages/SingleDrug";
 function App() {
   return (
     
@@ -12,6 +13,7 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/> 
+            <Route path="/drugs/:id" element={<SingleDrug/>}/>
           </Routes>
         </AnimatePresence>
     </div>

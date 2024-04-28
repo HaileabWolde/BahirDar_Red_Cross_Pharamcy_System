@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { data } from "../../particles/data"
+import { data } from "../../../particles/data"
 const Services = ()=>{
     const navigate = useNavigate()
     return (

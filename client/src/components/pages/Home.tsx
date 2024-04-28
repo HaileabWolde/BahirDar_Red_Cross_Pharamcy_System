@@ -1,8 +1,8 @@
-import NavBar from "../organs/Navbar/Navbar";
-import Footer from "../organs/Footer/Footer";
-import HeroSection from "../organs/HeroSection/HeroSection";
-import Services from "../organs/Services/Services";
-import Drugs from "../organs/Drugs/Drugs";
+import NavBar from "../organs/HomeSection/Navbar/Navbar";
+import Footer from "../organs/HomeSection/Footer/Footer";
+import HeroSection from "../organs/HomeSection/HeroSection/HeroSection";
+import Services from "../organs/HomeSection/Services/Services";
+import Drugs from "../organs/HomeSection/Drugs/Drugs";
 const Home = ()=>{
     return (
         <>

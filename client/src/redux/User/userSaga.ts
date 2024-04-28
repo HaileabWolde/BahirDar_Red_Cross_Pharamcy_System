@@ -41,8 +41,11 @@ function* workGetUserFetch(action: PayloadAction<{
       } else {
         yield put(LogInSuccess(data));
         yield put(EndInLoading());
-        if (navigate) {
+        if (navigate && data.rest.userType === "Customer") {
           navigate('/');
+        }
+        else if(navigate && data.rest.userType === "Pharmacist"){
+          navigate('/Pharmacist')
         }
       }
     } catch (error) {

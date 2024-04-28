@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
-import { Card } from "../../molecules/Card";
-import { Text } from "../../atoms/Text";
-import { StartInLoading } from "../../../redux/Drugs/drugs";
+import { Card } from "../../../molecules/Card";
+import { Text } from "../../../atoms/Text";
+import { StartInLoading } from "../../../../redux/Drugs/drugs";
 
 interface DrugsStateONE {
     drugs: {
