@@ -14,15 +14,23 @@ interface userType {
       name: string
     } | null
   }
+  cart: {
+    cartItems: {
+      name: string
+    }[]
+  }
 }
 const NavBar = () => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {userInfo} =  useSelector((state: userType)=> state.user)
+  const {cartItems} = useSelector((state: userType)=> state.cart)
 
   const handleLogout = ()=>{
     dispatch(LOGOUT_USER())
   }
+  
   return (
     <header className="w-full bg-white overflow-hidden fixed  top-0 left-0  shadow-lg pb-1">
       <nav
@@ -52,7 +60,18 @@ const NavBar = () => {
                 <div className='rounded-[50%] px-4 py-2 bg-[#1C274C] text-white font-serif'>
                 { userInfo?.name?.charAt(0)}
                 </div>
-                < FaShoppingCart size={28} color='#1C274C'/>
+                <div className='relative'>
+                   < FaShoppingCart size={32} color='#1C274C' />
+                   {
+                       cartItems && cartItems.length >= 1 ?  
+                       <div className='absolute top-[-5px] right-[-5px] rounded-[50%] bg-[#EA0063] text-white px-1 font-mono'>
+                            {cartItems.length}
+                        </div> : null
+                   }
+                </div>
+             
+              
+               
                 <button className='border-1 px-5 py-2 text-lg drop-shadow-md rounded font-serif font-semibold bg-[#1C274C] hover:bg-[#003366] text-white'
             onClick={()=>handleLogout()}>LOG OUT</button>
             </div> :  

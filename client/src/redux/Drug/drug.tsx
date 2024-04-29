@@ -18,7 +18,7 @@ interface drug {
 
 const initialState: drug = {
     singleDrug: null,
-    Loading: false,
+    Loading: true,
     Error: null
 }
 
